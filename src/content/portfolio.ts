@@ -69,7 +69,7 @@ export const content: Record<Lang, PortfolioContent> = {
     ],
     sections: {
       experienceTitle: "Experience",
-      projectsTitle: "Highlights",
+      projectsTitle: "Projects",
       educationTitle: "Education",
       contactTitle: "Contact",
     },
@@ -193,7 +193,7 @@ export const content: Record<Lang, PortfolioContent> = {
     ],
     sections: {
       experienceTitle: "경력",
-      projectsTitle: "하이라이트",
+      projectsTitle: "프로젝트",
       educationTitle: "학력",
       contactTitle: "연락처",
     },
