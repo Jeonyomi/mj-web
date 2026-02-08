@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CopyButton } from "@/components/copy-button";
 import { content, type Lang } from "@/content/portfolio";
 
 export default async function Page({
@@ -37,6 +38,21 @@ export default async function Page({
               {c.location ? <span>{c.location}</span> : null}
               {c.personal?.cell ? <span className="ml-2">· Cell: {c.personal.cell}</span> : null}
             </div>
+
+            <div className="flex flex-wrap gap-2 pt-1">
+              {c.links.find((l) => l.href.startsWith("mailto:")) ? (
+                <CopyButton
+                  label={safeLang === "en" ? "email" : "이메일"}
+                  value={c.links.find((l) => l.href.startsWith("mailto:"))!.href.replace("mailto:", "")}
+                />
+              ) : null}
+              {c.personal?.cell ? (
+                <CopyButton
+                  label={safeLang === "en" ? "phone" : "전화번호"}
+                  value={c.personal.cell}
+                />
+              ) : null}
+            </div>
           </div>
         </div>
 
@@ -46,7 +62,7 @@ export default async function Page({
             <a
               key={l.href}
               href={l.href}
-              className="rounded-md border border-zinc-200 px-3 py-1.5 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900"
+              className="rounded-md border border-zinc-200 px-3 py-1.5 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-900"
               target={l.href.startsWith("http") ? "_blank" : undefined}
               rel={l.href.startsWith("http") ? "noreferrer" : undefined}
             >
@@ -138,7 +154,7 @@ export default async function Page({
               <div className="font-medium">{p.name}</div>
               <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{p.oneLiner}</div>
               {p.bullets?.length ? (
-                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-700">
+                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
                   {p.bullets.map((b, i) => (
                     <li key={i}>{b}</li>
                   ))}
@@ -189,7 +205,9 @@ export default async function Page({
               <a
                 key={l.href}
                 href={l.href}
-                className="rounded-md border border-zinc-200 px-3 py-1.5 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900"
+                className="rounded-md border border-zinc-200 px-3 py-1.5 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                target={l.href.startsWith("http") ? "_blank" : undefined}
+                rel={l.href.startsWith("http") ? "noreferrer" : undefined}
               >
                 {l.label}
               </a>
