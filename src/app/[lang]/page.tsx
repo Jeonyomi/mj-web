@@ -72,7 +72,7 @@ export default async function Page({
         </div>
       </section>
 
-      <section id="experience" className="space-y-4">
+      <section id="experience" className="space-y-4 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.experienceTitle}</h2>
 
         {c.experienceHighlights?.length ? (
@@ -82,7 +82,10 @@ export default async function Page({
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {c.experienceHighlights.map((h) => (
-                <div key={h.title} className="rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+                <div
+                  key={h.title}
+                  className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700"
+                >
                   <div className="font-medium">{h.title}</div>
                   {h.tags?.length ? (
                     <div className="mt-3 flex flex-wrap gap-2">
@@ -113,7 +116,10 @@ export default async function Page({
           </div>
           <div className="space-y-5">
             {c.experience.map((e) => (
-              <div key={`${e.company}-${e.period}`} className="rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+              <div
+                key={`${e.company}-${e.period}`}
+                className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700"
+              >
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                   <div>
                     <div className="font-medium">{e.company}</div>
@@ -146,11 +152,14 @@ export default async function Page({
         </div>
       </section>
 
-      <section id="projects" className="space-y-4">
+      <section id="projects" className="space-y-4 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.projectsTitle}</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {c.projects.map((p) => (
-            <div key={p.name} className="rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+            <div
+              key={p.name}
+              className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700"
+            >
               <div className="font-medium">{p.name}</div>
               <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{p.oneLiner}</div>
               {p.bullets?.length ? (
@@ -185,7 +194,7 @@ export default async function Page({
       {c.education?.length ? (
         <section id="education" className="space-y-4">
           <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.educationTitle}</h2>
-          <div className="rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+          <div className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700">
             <ul className="list-disc space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
               {c.education.map((e, i) => (
                 <li key={i}>{e}</li>
@@ -195,9 +204,9 @@ export default async function Page({
         </section>
       ) : null}
 
-      <section id="contact" className="space-y-3">
+      <section id="contact" className="space-y-3 scroll-mt-24">
         <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.contactTitle}</h2>
-        <div className="rounded-xl border border-zinc-200 p-5 dark:border-zinc-800">
+        <div className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700">
           <div className="font-medium">{c.contact.headline}</div>
           <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-200">{c.contact.body}</p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
