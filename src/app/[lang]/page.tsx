@@ -30,25 +30,30 @@ export default async function Page({
           </div>
 
           <div className="min-w-0 space-y-2">
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
               {c.name}
             </h1>
-            <p className="text-zinc-700 dark:text-zinc-200">{c.role}</p>
-            <div className="text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-lg text-zinc-700 dark:text-zinc-100">{c.role}</p>
+            <div className="flex flex-wrap items-center gap-x-3 text-sm text-zinc-600 dark:text-zinc-400">
               {c.location ? <span>{c.location}</span> : null}
-              {c.personal?.cell ? <span className="ml-2">· Cell: {c.personal.cell}</span> : null}
+              {c.personal?.cell ? (
+                <>
+                  <span className="hidden sm:inline">·</span>
+                  <span>Cell: {c.personal.cell}</span>
+                </>
+              ) : null}
             </div>
 
-            <div className="flex flex-wrap gap-2 pt-1">
+            <div className="flex flex-wrap gap-2 pt-2">
               {c.links.find((l) => l.href.startsWith("mailto:")) ? (
                 <CopyButton
-                  label={safeLang === "en" ? "email" : "이메일"}
+                  label={safeLang === "en" ? "Email" : "이메일"}
                   value={c.links.find((l) => l.href.startsWith("mailto:"))!.href.replace("mailto:", "")}
                 />
               ) : null}
               {c.personal?.cell ? (
                 <CopyButton
-                  label={safeLang === "en" ? "phone" : "전화번호"}
+                  label={safeLang === "en" ? "Phone" : "전화번호"}
                   value={c.personal.cell}
                 />
               ) : null}
@@ -56,13 +61,15 @@ export default async function Page({
           </div>
         </div>
 
-        <p className="max-w-prose text-zinc-600 dark:text-zinc-300">{c.summary}</p>
+        <p className="max-w-prose text-base leading-relaxed text-zinc-600 dark:text-zinc-300 sm:text-lg">
+          {c.summary}
+        </p>
         <div className="flex flex-wrap gap-3 pt-2 text-sm">
           {c.links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="rounded-md border border-zinc-200 px-3 py-1.5 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-900"
+              className="inline-flex items-center justify-center rounded-md border border-zinc-200 bg-white px-4 py-2 font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:hover:text-white"
               target={l.href.startsWith("http") ? "_blank" : undefined}
               rel={l.href.startsWith("http") ? "noreferrer" : undefined}
             >
@@ -72,34 +79,36 @@ export default async function Page({
         </div>
       </section>
 
-      <section id="experience" className="space-y-4 scroll-mt-24">
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.experienceTitle}</h2>
+      <section id="experience" className="group/section space-y-6 scroll-mt-24">
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+          {c.sections.experienceTitle}
+        </h2>
 
         {c.experienceHighlights?.length ? (
-          <div className="space-y-3">
-            <div className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
+          <div className="space-y-4">
+            <div className="text-sm font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
               {experienceHighlightsLabel}
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {c.experienceHighlights.map((h) => (
                 <div
                   key={h.title}
-                  className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700"
+                  className="flex flex-col rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-700 dark:hover:bg-zinc-900"
                 >
-                  <div className="font-medium">{h.title}</div>
+                  <div className="font-semibold text-zinc-900 dark:text-white">{h.title}</div>
                   {h.tags?.length ? (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {h.tags.map((t) => (
                         <span
                           key={t}
-                          className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+                          className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
                         >
                           {t}
                         </span>
                       ))}
                     </div>
                   ) : null}
-                  <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+                  <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                     {h.bullets.map((b, i) => (
                       <li key={i}>{b}</li>
                     ))}
@@ -110,22 +119,26 @@ export default async function Page({
           </div>
         ) : null}
 
-        <div className="space-y-3 pt-2">
-          <div className="text-sm font-medium text-zinc-700 dark:text-zinc-200">
+        <div className="space-y-4 pt-4">
+          <div className="text-sm font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
             {experienceDetailsLabel}
           </div>
-          <div className="space-y-5">
+          <div className="space-y-6">
             {c.experience.map((e) => (
               <div
                 key={`${e.company}-${e.period}`}
-                className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700"
+                className="group relative flex flex-col gap-2 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-700 dark:hover:bg-zinc-900"
               >
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                   <div>
-                    <div className="font-medium">{e.company}</div>
-                    <div className="text-sm text-zinc-600 dark:text-zinc-400">{e.title}</div>
+                    <div className="text-lg font-bold text-zinc-900 dark:text-white">{e.company}</div>
+                    <div className="text-base font-medium text-zinc-700 dark:text-zinc-300">
+                      {e.title}
+                    </div>
                   </div>
-                  <div className="text-sm text-zinc-500 dark:text-zinc-500">{e.period}</div>
+                  <div className="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                    {e.period}
+                  </div>
                 </div>
 
                 {e.tags?.length ? (
@@ -133,7 +146,7 @@ export default async function Page({
                     {e.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs text-zinc-700 dark:bg-zinc-900 dark:text-zinc-200"
+                        className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300"
                       >
                         {t}
                       </span>
@@ -141,7 +154,7 @@ export default async function Page({
                   </div>
                 ) : null}
 
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                   {e.bullets.map((b, i) => (
                     <li key={i}>{b}</li>
                   ))}
@@ -152,30 +165,34 @@ export default async function Page({
         </div>
       </section>
 
-      <section id="projects" className="space-y-4 scroll-mt-24">
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.projectsTitle}</h2>
+      <section id="projects" className="group/section space-y-6 scroll-mt-24">
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+          {c.sections.projectsTitle}
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {c.projects.map((p) => (
             <div
               key={p.name}
-              className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700"
+              className="flex flex-col rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900/50 dark:hover:border-zinc-700 dark:hover:bg-zinc-900"
             >
-              <div className="font-medium">{p.name}</div>
-              <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{p.oneLiner}</div>
+              <div className="text-lg font-bold text-zinc-900 dark:text-white">{p.name}</div>
+              <div className="mt-1 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                {p.oneLiner}
+              </div>
               {p.bullets?.length ? (
-                <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
                   {p.bullets.map((b, i) => (
                     <li key={i}>{b}</li>
                   ))}
                 </ul>
               ) : null}
               {p.links?.length ? (
-                <div className="mt-4 flex flex-wrap gap-2 text-sm">
+                <div className="mt-auto pt-4 flex flex-wrap gap-3 text-sm font-medium">
                   {p.links.map((l) => (
                     <a
                       key={l.href}
                       href={l.href}
-                      className="underline underline-offset-4"
+                      className="text-zinc-600 underline decoration-zinc-300 underline-offset-4 transition hover:text-zinc-900 hover:decoration-zinc-600 dark:text-zinc-400 dark:decoration-zinc-600 dark:hover:text-white dark:hover:decoration-zinc-400"
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -189,13 +206,13 @@ export default async function Page({
         </div>
       </section>
 
-      {/* Methods & Tools removed */}
-
       {c.education?.length ? (
-        <section id="education" className="space-y-4">
-          <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.educationTitle}</h2>
-          <div className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700">
-            <ul className="list-disc space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+        <section id="education" className="space-y-6 scroll-mt-24">
+          <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            {c.sections.educationTitle}
+          </h2>
+          <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50">
+            <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
               {c.education.map((e, i) => (
                 <li key={i}>{e}</li>
               ))}
@@ -204,17 +221,23 @@ export default async function Page({
         </section>
       ) : null}
 
-      <section id="contact" className="space-y-3 scroll-mt-24">
-        <h2 className="text-xl font-semibold text-zinc-900 dark:text-white">{c.sections.contactTitle}</h2>
-        <div className="rounded-xl border border-zinc-200 p-5 transition hover:border-zinc-300 hover:shadow-sm dark:border-zinc-800 dark:hover:border-zinc-700">
-          <div className="font-medium">{c.contact.headline}</div>
-          <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-200">{c.contact.body}</p>
-          <div className="mt-4 flex flex-wrap gap-3 text-sm">
+      <section id="contact" className="space-y-6 scroll-mt-24">
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+          {c.sections.contactTitle}
+        </h2>
+        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/50">
+          <div className="text-lg font-semibold text-zinc-900 dark:text-white">
+            {c.contact.headline}
+          </div>
+          <p className="mt-2 leading-relaxed text-zinc-600 dark:text-zinc-300">
+            {c.contact.body}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3 text-sm">
             {c.links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="rounded-md border border-zinc-200 px-3 py-1.5 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                className="inline-flex items-center justify-center rounded-md border border-zinc-200 bg-white px-4 py-2 font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:hover:text-white"
                 target={l.href.startsWith("http") ? "_blank" : undefined}
                 rel={l.href.startsWith("http") ? "noreferrer" : undefined}
               >
