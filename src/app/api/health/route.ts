@@ -1,6 +1,7 @@
-import { prisma } from "@/lib/prisma";
-
 export async function GET() {
-  const userCount = await prisma.user.count();
-  return Response.json({ ok: true, userCount });
+  return Response.json({
+    ok: true,
+    service: "mj-web",
+    time: new Date().toISOString(),
+  });
 }

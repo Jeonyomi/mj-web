@@ -57,7 +57,7 @@ export const content: Record<Lang, PortfolioContent> = {
     role: "Sr. Global Project Manager · Regulated Stablecoin & On-chain FX",
     location: "Seoul, Korea",
     personal: {
-      cell: "+82-10-9989-5667",
+      // cell intentionally omitted from public site
       birth: "1986.06.22",
       gender: "Male",
     },
@@ -219,7 +219,7 @@ export const content: Record<Lang, PortfolioContent> = {
     role: "Sr. Global Project Manager · 규제형 스테이블코인 & 온체인 FX",
     location: "서울, 대한민국",
     personal: {
-      cell: "+82-10-9989-5667",
+      // cell intentionally omitted from public site
       birth: "1986.06.22",
       gender: "남성",
     },
